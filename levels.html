@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Level Buttons</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-image:url("https://wallpaperaccess.com/full/3991789.jpg");
+            background-repeat: no-repeat;
+            background-size:cover;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            animation: fadeIn 1s ease-in-out;
+            z-index: 2;
+        }
+        .btn {
+            padding: 10px 20px;
+            font-size: 30px;
+            border: none;
+            background-color: #1e6f30;
+            color: white;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: 0.3s;
+            text-decoration: none;
+            text-align: center;
+        }
+        .btn:hover {
+            background-color: #28a745;
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="Level1.html" class="btn">Level 1</a>
+        <a href="level2.html" class="btn">Level 2</a>
+        <a href="level3.html" class="btn">Level 3</a>
+        <a href="level4.html" class="btn">Level 4</a>
+        <a href="level5.html" class="btn">Level 5</a>
+        <a href="level6.html" class="btn">Level 6</a>
+    </div>
+</body>
+</html>

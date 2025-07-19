@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Final Score</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #bbebe1, #000000);
+            text-align: center;
+            overflow: hidden;
+            position: relative;
+        }
+        .score-container {
+            background-image:url("https://wallpaperaccess.com/full/1567665.png");
+            background-repeat: no-repeat;
+            background-size: cover;
+            padding: 50px;
+            border-radius: 10px;
+            box-shadow: 10 30px 8px rgba(0, 0, 0, 0.2);
+            width: 500px;
+            margin: auto;
+            text-align: center;
+            margin-top: 100px;
+            animation: fadeIn 1s ease-in-out;
+            z-index: 2;
+            position: relative;
+        }
+        h1 {
+            color: #07ef32;
+        }
+        p {
+            font-size: 20px;
+            margin: 10px 0;
+            color: #fafaf9 ;
+            font-weight: bold;
+        }
+        .total-score {
+            font-size: 24px;
+            font-weight: bolder;
+            color: rgb(231, 18, 18);
+        }
+        .restart-btn {
+            background-color: #ff4d00;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            font-size: 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        .restart-btn:hover {
+            background-color: #d43f00;
+            transform: scale(1.1);
+        }
+        .floating-particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+        .particle {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: rgb(5, 240, 146);
+            border-radius: 50%;
+            animation: floatUp 5s infinite ease-in-out;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+        @keyframes floatUp {
+            from {
+                transform: translateY(100vh);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(-10vh);
+                opacity: 1;
+            }
+        }
+        @keyframes waveText {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(20px);
+            }
+        }
+        .moving-text-container {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 100%;
+            white-space: nowrap;
+            overflow: hidden;
+            z-index: 0;
+        }
+        .moving-text {
+            display: inline-block;
+            font-size: 4rem;
+            font-weight: bold;
+            color: rgba(255, 255, 255, 0.1);
+            animation: waveText 3s ease-in-out infinite alternate;
+        }
+    </style>
+</head>
+<body>
+    <div class="score-container">
+        <h1>Final Score</h1>
+        <p>Level 1 Score: <span id="level1Score">0</span></p>
+        <p>Level 2 Score: <span id="level2Score">0</span></p>
+        <p>Level 3 Score: <span id="level3Score">0</span></p>
+        <p>Level 4 Score: <span id="level4Score">0</span></p>
+        <p>Level 5 Score: <span id="level5Score">0</span></p>
+        <p>Level 6 Score: <span id="level6Score">0</span></p>
+        <hr>
+        <p class="total-score">Total Score: <span id="totalScore">0</span></p>
+        <button class="restart-btn" onclick="resetQuiz()">Restart Quiz</button>
+    </div>
+
+    <script>
+        // Get scores from local storage
+        let level1 = localStorage.getItem("level1Score") ? parseInt(localStorage.getItem("level1Score")) : 0;
+        let level2 = localStorage.getItem("level2Score") ? parseInt(localStorage.getItem("level2Score")) : 0;
+        let level3 = localStorage.getItem("level3Score") ? parseInt(localStorage.getItem("level3Score")) : 0;
+        let level4 = localStorage.getItem("level4Score") ? parseInt(localStorage.getItem("level4Score")) : 0;
+        let level5 = localStorage.getItem("level5Score") ? parseInt(localStorage.getItem("level5Score")) : 0;
+        let level6 = localStorage.getItem("level6Score") ? parseInt(localStorage.getItem("level6Score")) : 0;
+
+        // Calculate total score
+        let totalScore = level1 + level2 + level3 + level4 + level5 + level6;
+
+        // Display scores on the page
+        document.getElementById("level1Score").textContent = level1;
+        document.getElementById("level2Score").textContent = level2;
+        document.getElementById("level3Score").textContent = level3;
+        document.getElementById("level4Score").textContent = level4;
+        document.getElementById("level5Score").textContent = level5;
+        document.getElementById("level6Score").textContent = level6;
+        document.getElementById("totalScore").textContent = totalScore;
+
+        // Reset quiz and clear scores
+        function resetQuiz() {
+            localStorage.removeItem("level1Score");
+            localStorage.removeItem("level2Score");
+            localStorage.removeItem("level3Score");
+            localStorage.removeItem("level4Score");
+            localStorage.removeItem("level5Score");
+            localStorage.removeItem("level6Score");
+            window.location.href = "level1.html"; // Redirect to first level
+        }
+    </script>
+    <div class="floating-particles"></div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const particleContainer = document.querySelector(".floating-particles");
+            for (let i = 0; i < 20; i++) {
+                let particle = document.createElement("div");
+                particle.classList.add("particle");
+                particle.style.left = Math.random() * 100 + "vw";
+                particle.style.animationDuration = (Math.random() * 3 + 2) + "s";
+                particleContainer.appendChild(particle);
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - Quiz Website</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+        body {
+            background-image: url('https://wallpaperaccess.com/full/1567665.png');
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .signup-container {
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.5);
+            width: 400px;
+            text-align: center;
+        }
+        h2 {
+            margin-bottom: 20px;
+        }
+        .input-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+        .input-group label {
+            display: block;
+            font-size: 1em;
+            margin-bottom: 5px;
+        }
+        .input-group input {
+            width: 100%;
+            padding: 10px;
+            font-size: 1em;
+            border: none;
+            border-radius: 6px;
+        }
+        .submit-btn {
+            width: 100%;
+            padding: 12px;
+            font-size: 1.2em;
+            color: white;
+            background: #28a745;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: 0.3s;
+            
+        }
+        .submit-btn:hover {
+            background: #218838;
+        }
+        .login-link {
+            margin-top: 15px;
+            display: block;
+            font-size: 0.9em;
+            color: #f1c40f;
+            text-decoration:wavy;
+        }
+        .login-link:hover {
+            text-decoration: underline;
+        }
+        
+        .error { color: red; display: none; }
+    </style>
+    
+</head>
+<body>
+    <div class="signup-container">
+        <h2>Create an Account</h2>
+        <form action="D:\Milan\levels.html"  method="get" onsubmit="return validateForm()">
+            <div class="input-group">
+                <label for="fullname">Full Name</label>
+                <input type="text" id="fullname" placeholder="Enter your full name" required>
+            </div>
+            <div class="input-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" placeholder="Enter your email" required>
+            </div>
+            <div class="input-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" placeholder="Create a password" required>
+            </div>
+            <div class="input-group">
+                <label for="confirm-password">Confirm Password</label>
+                <input type="password" id="confirm-password" placeholder="Confirm your password" required>
+            </div>
+            <button type="submit"  class="submit-btn" onclick="window.location.href='levels.html';">Sign Up</button>
+        </form>
+        <script>
+            function validateForm() {
+                let password = document.getElementById("password").value;
+                let confirmPassword = document.getElementById("confirm-password").value;
+                let errorMessage = document.getElementById("error-message");
+        
+                if (password !== confirmPassword) {
+                    errorMessage.style.display = "block"; // Show error message
+                    return false;
+                } else {
+                    errorMessage.style.display = "none"; // Hide error if fixed
+                    return true;
+                }
+            } 
+        <a href="login.html" class="login-link">Already have an account? Log in</a>
+    </div>
+</body>
+</html>

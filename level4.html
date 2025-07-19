@@ -1,0 +1,348 @@
+<html>
+    <head>
+        <title>level4</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                background-image:url("https://wallpaperboat.com/wp-content/uploads/2020/04/cyber-wallpaper-image-10.jpg");
+                background-repeat: no-repeat;
+                background-size:cover;
+                background-color: rgb(20, 14, 61);
+                color: #02ff5f;
+                font-size: larger;
+                border-color: #020202;
+                border: #020202;
+                margin: 10;
+                padding: 0;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+            }
+            .quiz-container {
+                background-image:url("https://img.freepik.com/premium-photo/blue-sphere-with-network-lines-dots_880493-25.jpg");
+                border-radius: 12px;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                width: 90%;
+                max-width: 600px;
+                padding: 20px;
+                text-align: center;
+            }
+            .question {
+                font-size: 1.2em;
+                margin-bottom: 20px;
+                font-size: larger;
+            }
+            .options {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+            
+            }
+            .option {
+                padding: 10px;
+                border: 2px solid #020202;
+                border-radius: 8px;
+                cursor: pointer;
+                transition: background-color 0.3s, color 0.3s;
+                font-weight: 500;
+                font-size: larger;
+            }
+            .option:hover {
+                background-color: #4ed46b; 
+                color: #3e2727;
+            }
+            .timer {
+                font-size: 1.2em;
+                margin-bottom: 20px;
+                color: #fd0606;
+            }
+            .result {
+                font-size: 1.5em;
+                color: #4caf50;
+            }
+            .restart-btn {
+                background-color: #ff4d00;
+                color: #fff;
+                border: none;
+                padding: 10px 20px;
+                font-size: 1em;
+                border-radius: 8px;
+                cursor: pointer;
+                margin-top: 0px;
+            }
+            .restart-btn:hover {
+                background-color: #0056b3;
+                transform: scale(1.1);
+            }
+            .next-level-btn {
+        background-color: #02ff5f;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        font-size: 1em;
+        border-radius: 8px;
+        cursor: pointer;
+        margin-top: 0px;
+        margin-left: 450px;
+    }
+
+    .next-level-btn:hover {
+        background-color: #0056b3;
+        transform: scale(1.1);
+    }
+        </style>
+    </head>
+    <body>
+        <div class="quiz-container">
+            <div class="timer">Time Left: <span id="time">30</span>s</div>
+            <div class="question">Question will appear here</div>
+            <div class="options"></div>
+            <div class="result" style="display: none;">Your score: <span id="score">0</span></div>
+            <button class="restart-btn" style="display: none;">Restart Quiz</button>
+            <a href="D:\Milan\level5.html"><button id="nextLevelBtn" class="next-level-btn" style="display: none;">Next Level</button></a>
+        </div>
+        <script>
+            const quizData = [
+                {
+                    question: "What is the primary objective of accounting?",
+                    options: ["To record only profits", "To maintain financial records", "To avoid taxes", "To manipulate financial statements"],
+                    answer: "To maintain financial records"
+                },
+                {
+                    question: "Which accounting principle states that expenses should be recognized in the same period as the related revenues?",
+                    options: [ "Matching Principle","Revenue Recognition Principle", "Consistency Principle", "Going Concern Principle"],
+                    answer: "Matching Principle"
+                },
+                {
+                    question: "Which of the following is NOT an operating system?",
+                    options: ["Windows", "Linux", "Microsoft Office", "MacOS"],
+                    answer: "Microsoft Office"
+                },
+                {
+                    question: "Which CSS property is used to change text color?",
+                    options: ["font-style", " background-color", "text-color", "color"],
+                    answer: "color"
+                },
+                {
+                    question: "What is the file extension for a Visual Basic project?",
+                    options: [".vbp", " .vbscript", ".vbs", ".vbc"],
+                    answer: ".vbp"
+                },
+                {
+                    question: "What is the purpose of the Option Explicit statement in VB?",
+                    options: ["It forces variable declaration before use","It hides variables","It makes variables dynamic","It is used for debugging"],
+                    answer: "It forces variable declaration before use"
+                },
+                {
+                    question: "What is the default scope of a variable declared inside a procedure in VB?",
+                    options: [" Public", "Private", "Local", "Global"],
+                    answer: "Local"
+                },
+                {
+                    question: "What is the first phase of the System Development Life Cycle (SDLC)?",
+                    options: ["Design", "Planning", "Testing", "Maintenance"],
+                    answer: "Planning"
+                },
+                {
+                    question: "Which model follows a sequential approach in system development?",
+                    options: ["Agile Model", "Spiral Model", "Waterfall Model", "RAD Model"],
+                    answer: "Waterfall Model"
+                },
+                {
+                    question: "Which diagram is used to model system processes and data flow?",
+                    options: [" Use Case Diagram", " Data Flow Diagram ", "ER Diagram", " Activity Diagram"],
+                    answer: " Data Flow Diagram "
+                }
+                
+            ];
+            let currentQuestion = 0;
+            let score = 0;
+            let timeLeft = 30;
+            let timerInterval;
+            const timerEl = document.getElementById('time');
+            const questionEl = document.querySelector('.question');
+            const optionsEl = document.querySelector('.options');
+            const resultEl = document.querySelector('.result');
+            const scoreEl = document.getElementById('score');
+            const restartBtn = document.querySelector('.restart-btn');
+            document.getElementById("nextLevelBtn").addEventListener("click", function() {
+    window.location.href = "D:\Milan\level2.html"; // Change this to your next level page
+});
+            function loadQuestion() {
+                if (currentQuestion >= quizData.length) {
+                    endQuiz();
+                    return;
+                }
+                clearInterval(timerInterval);
+                timeLeft = 30; 
+                timerEl.textContent = timeLeft;
+                startTimer(); 
+                const currentQuiz = quizData[currentQuestion];
+                questionEl.textContent = currentQuiz.question;
+                optionsEl.innerHTML = '';
+                currentQuiz.options.forEach(option => {
+                    const button = document.createElement('button');
+                    button.classList.add('option');
+                    button.textContent = option;
+                    button.onclick = () => checkAnswer(option);
+                    optionsEl.appendChild(button);
+                });
+            }
+            
+            function endQuiz() {
+                clearInterval(timerInterval);
+                questionEl.style.display = 'none';
+                optionsEl.style.display = 'none';
+                resultEl.style.display = 'block';
+                scoreEl.textContent = score;
+                restartBtn.style.display = 'block';
+                document.getElementById("nextLevelBtn").style.display = "block"; // Show Next Level Button
+                // Store the score for this level
+                   localStorage.setItem("level4Score", score); // Change for level2, level3 accordingly           
+            }
+           
+            restartBtn.addEventListener('click', () => {
+                currentQuestion = 0;
+                score = 0;
+                timeLeft = 30;
+                timerEl.textContent = timeLeft;
+                questionEl.style.display = 'block';
+                optionsEl.style.display = 'block';
+                resultEl.style.display = 'none';
+                restartBtn.style.display = 'none';
+                loadQuestion();
+            });
+            function checkAnswer(selectedOption) {
+    const currentQuiz = quizData[currentQuestion];
+    const optionsButtons = document.querySelectorAll('.option');
+
+    // Disable all buttons to prevent multiple clicks
+    optionsButtons.forEach(btn => btn.disabled = true);
+
+    // Check if the selected option is correct
+    if (selectedOption === currentQuiz.answer) {
+        // Correct answer: Turn green
+        optionsButtons.forEach(btn => {
+            if (btn.textContent === selectedOption) {
+                btn.style.backgroundColor = 'green';
+                btn.style.color = 'white';
+            }
+        });
+        score++; // Increase score
+    } else {
+        // Wrong answer: Turn red
+        optionsButtons.forEach(btn => {
+            if (btn.textContent === selectedOption) {
+                btn.style.backgroundColor = 'red';
+                btn.style.color = 'white';
+            }
+            // Also highlight the correct answer in green
+            if (btn.textContent === currentQuiz.answer) {
+                btn.style.backgroundColor = 'green';
+                btn.style.color = 'white';
+            }
+        });
+    }
+
+    // Wait for 1 second, then load the next question
+    setTimeout(() => {
+        currentQuestion++;
+        if (currentQuestion < quizData.length) {
+            loadQuestion(); // Load next question
+        } else {
+            endQuiz(); // End the quiz
+        }
+    }, 1000);
+}
+
+function loadQuestion() {
+    if (currentQuestion >= quizData.length) {
+        endQuiz();
+        return;
+    }
+
+    const currentQuiz = quizData[currentQuestion];
+    questionEl.textContent = currentQuiz.question;
+    optionsEl.innerHTML = '';
+
+    currentQuiz.options.forEach(option => {
+        const button = document.createElement('button');
+        button.classList.add('option');
+        button.textContent = option;
+        button.style.backgroundColor = ''; // Reset button color
+        button.style.color = ''; // Reset text color
+        button.disabled = false; // Enable buttons for the new question
+        button.onclick = () => checkAnswer(option);
+        optionsEl.appendChild(button);
+    });
+}
+function startTimerForEachQuestion() {
+    clearInterval(timerInterval); // Clear any existing timer
+    timeLeft = 30; // Reset time for new question
+    timerEl.textContent = timeLeft;
+
+    timerInterval = setInterval(() => {
+        timeLeft--;
+        timerEl.textContent = timeLeft;
+
+        if (timeLeft <= 0) {
+            clearInterval(timerInterval); // Stop timer when time is up
+            autoMoveToNext(); // Move to the next question automatically
+        }
+    }, 1000);
+}
+
+// Function to move to the next question when time runs out
+function autoMoveToNext() {
+    const optionsButtons = document.querySelectorAll('.option');
+
+    // Highlight the correct answer in green
+    optionsButtons.forEach(btn => {
+        if (btn.textContent === quizData[currentQuestion].answer) {
+            btn.style.backgroundColor = 'green';
+            btn.style.color = 'white';
+        }
+        btn.disabled = true; // Disable all buttons
+    });
+
+    // Wait 1 second before loading the next question
+    setTimeout(() => {
+        currentQuestion++;
+        if (currentQuestion < quizData.length) {
+            loadQuestion(); // Load the next question
+        } else {
+            endQuiz(); // End the quiz
+        }
+    }, 1000);
+}
+
+// Call this function inside loadQuestion() to start a new timer for each question
+function loadQuestion() {
+    if (currentQuestion >= quizData.length) {
+        endQuiz();
+        return;
+    }
+
+    const currentQuiz = quizData[currentQuestion];
+    questionEl.textContent = currentQuiz.question;
+    optionsEl.innerHTML = '';
+
+    currentQuiz.options.forEach(option => {
+        const button = document.createElement('button');
+        button.classList.add('option');
+        button.textContent = option;
+        button.style.backgroundColor = ''; // Reset button color
+        button.style.color = ''; // Reset text color
+        button.disabled = false; // Enable buttons for the new question
+        button.onclick = () => checkAnswer(option);
+        optionsEl.appendChild(button);
+    });
+
+    startTimerForEachQuestion(); // Start timer for this question
+}
+            loadQuestion();
+        </script>
+    </body>
+    
+</html>

@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Master - Home</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #48908a, #121f10);
+            text-align: center;
+            overflow: hidden;
+            position: relative;
+        }
+        .container {
+            background: rgba(12, 12, 12, 0.95);
+            padding: 50px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            animation: fadeIn 1s ease-in-out;
+            z-index: 2;
+        }
+        .logo {
+            font-size: 5rem;
+            color: #ff4757;
+            animation: bounce 1.5s infinite;
+        } 
+        .title {
+            font-size: 2.8rem;
+            font-weight: 700;
+            color: #333;
+        }
+        .title span {
+            color: #218838;
+        }
+        .subtitle {
+            margin: 15px 0 25px;
+            font-size: 1.3rem;
+            color: #555;
+        }
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+        .start-btn, .info-btn {
+            text-decoration: none;
+            padding: 14px 30px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 10px;
+            transition: all 0.3s ease-in-out;
+        }
+        .start-btn {
+            background: #28a745;
+            color: white;
+        }
+        .info-btn {
+            background: #4c89ff;
+            color: white;
+        }
+        .start-btn:hover {
+            background: #218838;
+            transform: scale(1.1);
+        }
+        .info-btn:hover {
+            background: #3469d4;
+            transform: scale(1.1);
+        }
+        .floating-particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+        .particle {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 50%;
+            animation: floatUp 5s infinite ease-in-out;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+        @keyframes floatUp {
+            from {
+                transform: translateY(100vh);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(-10vh);
+                opacity: 1;
+            }
+        }
+        @keyframes waveText {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(20px);
+            }
+        }
+        .moving-text-container {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 100%;
+            white-space: nowrap;
+            overflow: hidden;
+            z-index: 0;
+        }
+        .moving-text {
+            display: inline-block;
+            font-size: 4rem;
+            font-weight: bold;
+            color: rgba(255, 255, 255, 0.1);
+            animation: waveText 3s ease-in-out infinite alternate;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">❓</div>
+        <h1 class="title">Welcome to <span>Quiz Master</span></h1>
+        <p class="subtitle">Test your knowledge and challenge yourself!</p>
+        <div class="buttons">
+            <a href="home.html" class="start-btn">Start Quiz</a>
+            <a href="about.html" class="info-btn">About</a>
+        </div>
+    </div>
+    <div class="floating-particles"></div>
+    <div class="moving-text-container">
+        <div class="moving-text">QUIZ QUIZ QUIZ QUIZ QUIZ QUIZ QUIZ QUIZ</div>
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const particleContainer = document.querySelector(".floating-particles");
+            for (let i = 0; i < 100; i++) {
+                let particle = document.createElement("div");
+                particle.classList.add("particle");
+                particle.style.left = Math.random() * 100 + "vw";
+                particle.style.animationDuration = (Math.random() * 3 + 2) + "s";
+                particleContainer.appendChild(particle);
+            }
+        });
+    </script>
+</body>
+</html>
