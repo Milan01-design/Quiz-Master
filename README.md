@@ -30,7 +30,7 @@ An interactive quiz game built using HTML, CSS, and JavaScript.
 ![Options](level.png.png)
 
 ### Results
-![Results](score.png)
-![Results](totalscore.png)
+![Results](score.png.png)
+![Results](totalscore.png.png)
 
   #if you want php code you can content me through comments or email me at milanvij01@gmail.com
